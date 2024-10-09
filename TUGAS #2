@@ -12,52 +12,39 @@ Kelas : S1-IF-10-03
 
 // Muhammad Faza Abiyyu - Pascal
 
-program DPPL_PSPEC;
+program FormRegistrasi;
 
 type
-  TAngka = array[1..100] of Integer;
-
-var
-  angka: TAngka;
-  n, i: Integer;
-
-procedure InputData(var angka: TAngka; var n: Integer);
-begin
-  Write('Masukkan jumlah angka: ');
-  ReadLn(n);
-  for i := 1 to n do
-  begin
-    Write('Masukkan angka ke-', i, ': ');
-    ReadLn(angka[i]);
+  TUser = record
+    username: string;
+    password: string;
+    email: string;
   end;
-end;
 
-procedure UrutkanData(var angka: TAngka; n: Integer);
 var
-  temp, j, k: Integer;
-begin
-  for j := 1 to n-1 do
-    for k := j+1 to n do
-      if angka[j] > angka[k] then
-      begin
-        temp := angka[j];
-        angka[j] := angka[k];
-        angka[k] := temp;
-      end;
-end;
-
-procedure CetakData(angka: TAngka; n: Integer);
-begin
-  WriteLn('Data yang sudah diurutkan:');
-  for i := 1 to n do
-    WriteLn(angka[i]);
-end;
+  user: TUser;
 
 begin
-  InputData(angka, n);
-  UrutkanData(angka, n);
-  CetakData(angka, n);
+  WriteLn('=== Form Registrasi ===');
+  
+  Write('Masukkan username: ');
+  ReadLn(user.username);
+  
+  Write('Masukkan password: ');
+  ReadLn(user.password);
+  
+  Write('Masukkan email: ');
+  ReadLn(user.email);
+  
+  WriteLn;
+  WriteLn('=== Data Registrasi ===');
+  WriteLn('Username: ', user.username);
+  WriteLn('Password: ', user.password);
+  WriteLn('Email: ', user.email);
+  
+  WriteLn('Registrasi berhasil!');
 end.
+
 
 
 // Muhammad Rizqi - C
