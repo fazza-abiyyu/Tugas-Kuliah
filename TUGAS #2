@@ -1,0 +1,68 @@
+// Implementasi PSPEC dari DPPL 
+
+/*
+Anggota Kelompok-Puson :
+1.  Muhammad Faza Abiyyu - 2211102010
+2. Muhammad Rizqi - 2211102016
+3. Evan Rafif Pradana - 2211102017
+4. Revan Kurwniawan - 221110267
+*/
+
+// Muhammad Faza Abiyyu - C
+
+#include <stdio.h>
+
+int main() {
+    int num1, num2, sum;
+
+    // Mencetak Hello, World!
+    printf("Hello, World!\n");
+
+    // Meminta input dari pengguna
+    printf("Masukkan angka pertama: ");
+    scanf("%d", &num1);
+    printf("Masukkan angka kedua: ");
+    scanf("%d", &num2);
+
+    // Menghitung jumlah
+    sum = num1 + num2;
+
+    // Mencetak hasil
+    printf("Jumlah kedua angka adalah: %d\n", sum);
+    return 0;
+}
+
+
+// Muhammad Rizqi
+
+
+
+// Evan Rafif Pradana - PHP
+
+<?php
+class MemberTask {
+    public $id;
+    public $taskDescription;
+
+    function __construct($id, $taskDescription) {
+        $this->id = $id;
+        $this->taskDescription = $taskDescription;
+    }
+}
+
+$members = array(
+    new MemberTask(1, "Design product specification"),
+    new MemberTask(2, "Implement main architecture"),
+    new MemberTask(3, "Test the system"),
+    new MemberTask(4, "Documentation")
+);
+
+echo "Group Tasks Assignment:\n";
+foreach ($members as $member) {
+    echo "Member {$member->id} - Task: {$member->taskDescription}\n";
+}
+?>
+
+
+
+// Revan Kurniawan 
