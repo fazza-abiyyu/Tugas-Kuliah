@@ -17,26 +17,48 @@ Kelas : S1-IF-10-03
 int main() {
     int num1, num2, sum;
 
-    // Mencetak Hello, World!
     printf("Hello, World!\n");
 
-    // Meminta input dari pengguna
     printf("Masukkan angka pertama: ");
     scanf("%d", &num1);
     printf("Masukkan angka kedua: ");
     scanf("%d", &num2);
 
-    // Menghitung jumlah
     sum = num1 + num2;
 
-    // Mencetak hasil
     printf("Jumlah kedua angka adalah: %d\n", sum);
     return 0;
 }
 
 
-// Muhammad Rizqi
+// Muhammad Rizqi -C
 
+#include <stdio.h>
+
+int main() {
+    int jumlahElemen, i;
+    float prob, totalProb = 1.0;
+
+    printf("Perhitungan PSPEC\n");
+
+    printf("Masukkan jumlah elemen: ");
+    scanf("%d", &jumlahElemen);
+
+    for (i = 0; i < jumlahElemen; i++) {
+        printf("Masukkan probabilitas sukses untuk elemen %d: ", i + 1);
+        scanf("%f", &prob);
+
+        if (prob < 0.0 || prob > 1.0) {
+            printf("Error: Probabilitas harus antara 0.0 dan 1.0\n");
+            return 1;
+        }
+
+        totalProb *= prob;
+    }
+
+    printf("Probabilitas total keberhasilan: %.4f\n", totalProb);
+    return 0;
+}
 
 
 // Evan Rafif Pradana - PHP
