@@ -10,28 +10,57 @@ Anggota Kelompok-Puson :
 Kelas : S1-IF-10-03
 */
 
-// Muhammad Faza Abiyyu - C
+// Muhammad Faza Abiyyu - Pascal
 
-#include <stdio.h>
+program DPPL_PSPEC;
 
-int main() {
-    int num1, num2, sum;
+type
+  TAngka = array[1..100] of Integer;
 
-    printf("Hello, World!\n");
+var
+  angka: TAngka;
+  n, i: Integer;
 
-    printf("Masukkan angka pertama: ");
-    scanf("%d", &num1);
-    printf("Masukkan angka kedua: ");
-    scanf("%d", &num2);
+procedure InputData(var angka: TAngka; var n: Integer);
+begin
+  Write('Masukkan jumlah angka: ');
+  ReadLn(n);
+  for i := 1 to n do
+  begin
+    Write('Masukkan angka ke-', i, ': ');
+    ReadLn(angka[i]);
+  end;
+end;
 
-    sum = num1 + num2;
+procedure UrutkanData(var angka: TAngka; n: Integer);
+var
+  temp, j, k: Integer;
+begin
+  for j := 1 to n-1 do
+    for k := j+1 to n do
+      if angka[j] > angka[k] then
+      begin
+        temp := angka[j];
+        angka[j] := angka[k];
+        angka[k] := temp;
+      end;
+end;
 
-    printf("Jumlah kedua angka adalah: %d\n", sum);
-    return 0;
-}
+procedure CetakData(angka: TAngka; n: Integer);
+begin
+  WriteLn('Data yang sudah diurutkan:');
+  for i := 1 to n do
+    WriteLn(angka[i]);
+end;
+
+begin
+  InputData(angka, n);
+  UrutkanData(angka, n);
+  CetakData(angka, n);
+end.
 
 
-// Muhammad Rizqi -C
+// Muhammad Rizqi - C
 
 #include <stdio.h>
 
@@ -65,25 +94,53 @@ int main() {
 
 <?php
 class MemberTask {
-    public $id;
-    public $taskDescription;
-
-    function __construct($id, $taskDescription) {
+    public $id;               
+    public $taskDescription;   
+    public $estimatedHours;    
+    function __construct($id, $taskDescription, $estimatedHours) {
         $this->id = $id;
         $this->taskDescription = $taskDescription;
+        $this->estimatedHours = $estimatedHours;
     }
 }
 
 $members = array(
-    new MemberTask(1, "Design product specification"),
-    new MemberTask(2, "Implement main architecture"),
-    new MemberTask(3, "Test the system"),
-    new MemberTask(4, "Documentation")
+    new MemberTask(1, "Design product specification", 12), 
+    new MemberTask(2, "Implement main architecture", 20),   
+    new MemberTask(3, "Test the system", 8),                
+    new MemberTask(4, "Documentation", 5)                  
 );
+
+function calculateTotalTime($members) {
+    $totalTime = 0; 
+    foreach ($members as $member) {
+        $totalTime += $member->estimatedHours;
+    }
+    return $totalTime; 
+}
+
+function getLongTasks($members, $minHours) {
+    $longTasks = array(); 
+    foreach ($members as $member) {
+        if ($member->estimatedHours > $minHours) {
+            $longTasks[] = $member; 
+        }
+    }
+    return $longTasks; 
+}
 
 echo "Group Tasks Assignment:\n";
 foreach ($members as $member) {
-    echo "Member {$member->id} - Task: {$member->taskDescription}\n";
+    echo "Member {$member->id} - Task: {$member->taskDescription} (Estimated time: {$member->estimatedHours} hours)\n";
+}
+
+$totalTime = calculateTotalTime($members);
+echo "\nTotal estimated time for all tasks: $totalTime hours\n";
+
+$longTasks = getLongTasks($members, 10);
+echo "\nTasks taking longer than 10 hours:\n";
+foreach ($longTasks as $task) {
+    echo "Member {$task->id} - Task: {$task->taskDescription} (Estimated time: {$task->estimatedHours} hours)\n";
 }
 ?>
 
