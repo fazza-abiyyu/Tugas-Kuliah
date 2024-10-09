@@ -10,9 +10,163 @@ Anggota Kelompok-Puson :
 Kelas : S1-IF-10-03
 */
 
+
 // Muhammad Faza Abiyyu - Pascal
 
-program FormRegistrasi;
+program RegisterUser;
+
+uses SysUtils;
+
+type
+  TUser = record
+    username: string;
+    password: string;
+    email: string;
+    name: string;
+    address: string;
+    role_id: integer;
+    posyandu_id: integer;
+  end;
+
+var
+  users: array of TUser;
+  newUser: TUser;
+  username, password, email, name, address: string;
+  role_id, posyandu_id: integer;
+  i: integer;
+
+function HashPassword(pass: string): string;
+begin
+  Result := 'hashed_' + pass;
+end;
+
+function UsernameExists(username: string): boolean;
+var
+  i: integer;
+begin
+  Result := False;
+  for i := 0 to High(users) do
+  begin
+    if users[i].username = username then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+end;
+
+function EmailExists(email: string): boolean;
+var
+  i: integer;
+begin
+  Result := False;
+  for i := 0 to High(users) do
+  begin
+    if users[i].email = email then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+end;
+
+procedure SendEmail(subject, body, recipient: string);
+begin
+  WriteLn('Email sent to ', recipient);
+  WriteLn('Subject: ', subject);
+  WriteLn('Body: ', body);
+end;
+
+begin
+  Write('Masukkan username: ');
+  ReadLn(username);
+
+  Write('Masukkan password: ');
+  ReadLn(password);
+
+  Write('Masukkan email: ');
+  ReadLn(email);
+
+  Write('Masukkan name: ');
+  ReadLn(name);
+
+  Write('Masukkan address: ');
+  ReadLn(address);
+
+  Write('Masukkan role_id: ');
+  ReadLn(role_id);
+
+  Write('Masukkan posyandu_id: ');
+  ReadLn(posyandu_id);
+
+  if UsernameExists(username) then
+  begin
+    WriteLn('Username already exists');
+    Exit;
+  end;
+
+  if EmailExists(email) then
+  begin
+    WriteLn('Email already exists');
+    Exit;
+  end;
+
+  password := HashPassword(password);
+
+  newUser.username := username;
+  newUser.password := password;
+  newUser.email := email;
+  newUser.name := name;
+  newUser.address := address;
+  newUser.role_id := role_id;
+  newUser.posyandu_id := posyandu_id;
+
+  SetLength(users, Length(users) + 1);
+  users[High(users)] := newUser;
+
+  SendEmail('Registrasi Berhasil', 'Registrasi berhasil, tunggu disetujui oleh admin.', newUser.email);
+
+  WriteLn('Registered user: ', newUser.username);
+  WriteLn('Registrasi berhasil, email notifikasi telah dikirim.');
+end.
+
+
+
+// Muhammad Rizqi - PHP
+
+<?php
+
+$users = [
+    "user1@example.com" => [
+        "roles" => ["user"]
+    ],
+    "admin@example.com" => [
+        "roles" => ["admin", "user"]
+    ]
+];
+
+function addRole($email, $role) {
+    global $users;
+
+    if (isset($users[$email])) {
+        if (!in_array($role, $users[$email]['roles'])) {
+            $users[$email]['roles'][] = $role;
+            echo "Role '$role' berhasil ditambahkan untuk $email.\n";
+        } else {
+            echo "$email sudah memiliki role '$role'.\n";
+        }
+    } else {
+        echo "Pengguna dengan email $email tidak ditemukan.\n";
+    }
+}
+
+?>
+
+
+
+// Evan Rafif Pradana - Pascal
+
+program FormLogin;
 
 type
   TUser = record
@@ -23,8 +177,11 @@ type
 
 var
   user: TUser;
+  inputUsername, inputPassword: string;
+  isLoggedIn: boolean;
 
 begin
+  // Registrasi Akun
   WriteLn('=== Form Registrasi ===');
   
   Write('Masukkan username: ');
@@ -43,127 +200,66 @@ begin
   WriteLn('Email: ', user.email);
   
   WriteLn('Registrasi berhasil!');
+  
+  // Login
+  isLoggedIn := false;
+  
+  while not isLoggedIn do
+  begin
+    WriteLn;
+    WriteLn('=== Form Login ===');
+    
+    Write('Masukkan username: ');
+    ReadLn(inputUsername);
+    
+    Write('Masukkan password: ');
+    ReadLn(inputPassword);
+    
+    if (inputUsername = user.username) and (inputPassword = user.password) then
+    begin
+      WriteLn('Login berhasil! Selamat datang, ', user.username, '!');
+      isLoggedIn := true;
+    end
+    else
+    begin
+      WriteLn('Username atau password salah. Silakan coba lagi.');
+    end;
+  end;
 end.
-
-
-
-// Muhammad Rizqi - C
-
-#include <stdio.h>
-
-int main() {
-    int jumlahElemen, i;
-    float prob, totalProb = 1.0;
-
-    printf("Perhitungan PSPEC\n");
-
-    printf("Masukkan jumlah elemen: ");
-    scanf("%d", &jumlahElemen);
-
-    for (i = 0; i < jumlahElemen; i++) {
-        printf("Masukkan probabilitas sukses untuk elemen %d: ", i + 1);
-        scanf("%f", &prob);
-
-        if (prob < 0.0 || prob > 1.0) {
-            printf("Error: Probabilitas harus antara 0.0 dan 1.0\n");
-            return 1;
-        }
-
-        totalProb *= prob;
-    }
-
-    printf("Probabilitas total keberhasilan: %.4f\n", totalProb);
-    return 0;
-}
-
-
-// Evan Rafif Pradana - PHP
-
-<?php
-class MemberTask {
-    public $id;               
-    public $taskDescription;   
-    public $estimatedHours;    
-    function __construct($id, $taskDescription, $estimatedHours) {
-        $this->id = $id;
-        $this->taskDescription = $taskDescription;
-        $this->estimatedHours = $estimatedHours;
-    }
-}
-
-$members = array(
-    new MemberTask(1, "Design product specification", 12), 
-    new MemberTask(2, "Implement main architecture", 20),   
-    new MemberTask(3, "Test the system", 8),                
-    new MemberTask(4, "Documentation", 5)                  
-);
-
-function calculateTotalTime($members) {
-    $totalTime = 0; 
-    foreach ($members as $member) {
-        $totalTime += $member->estimatedHours;
-    }
-    return $totalTime; 
-}
-
-function getLongTasks($members, $minHours) {
-    $longTasks = array(); 
-    foreach ($members as $member) {
-        if ($member->estimatedHours > $minHours) {
-            $longTasks[] = $member; 
-        }
-    }
-    return $longTasks; 
-}
-
-echo "Group Tasks Assignment:\n";
-foreach ($members as $member) {
-    echo "Member {$member->id} - Task: {$member->taskDescription} (Estimated time: {$member->estimatedHours} hours)\n";
-}
-
-$totalTime = calculateTotalTime($members);
-echo "\nTotal estimated time for all tasks: $totalTime hours\n";
-
-$longTasks = getLongTasks($members, 10);
-echo "\nTasks taking longer than 10 hours:\n";
-foreach ($longTasks as $task) {
-    echo "Member {$task->id} - Task: {$task->taskDescription} (Estimated time: {$task->estimatedHours} hours)\n";
-}
-?>
 
 
 
 // Revan Kurniawan - Pascal
 
-program PerhitunganPSPEC;
+program TambahPosyandu;
 
-var
-  jumlahElemen, i: integer;
-  prob, totalProb: real;
-
-begin
-  totalProb := 1.0;
-
-  writeln('Perhitungan PSPEC');
-  
-  write('Masukkan jumlah elemen: ');
-  readln(jumlahElemen);
-
-  for i := 1 to jumlahElemen do
-  begin
-    write('Masukkan probabilitas sukses untuk elemen ', i, ': ');
-    readln(prob);
-
-    if (prob < 0.0) or (prob > 1.0) then
-    begin
-      writeln('Error: Probabilitas harus antara 0.0 dan 1.0');
-      exit;
-    end;
-
-    totalProb := totalProb * prob;
+type
+  TPosyandu = record
+    namaPosyandu: string;
+    alamat: string;
+    puskesmas: string;
   end;
 
-  writeln('Probabilitas total keberhasilan: ', totalProb:0:4);
+var
+  posyandu: TPosyandu;
+
+begin
+  writeln('Tambah Data Posyandu');
+  
+  write('Masukkan Nama Posyandu: ');
+  readln(posyandu.namaPosyandu);
+  
+  write('Masukkan Alamat: ');
+  readln(posyandu.alamat);
+  
+  write('Masukkan Nama Puskesmas: ');
+  readln(posyandu.puskesmas);
+  
+  writeln;
+  writeln('Data Posyandu yang ditambahkan:');
+  writeln('Nama Posyandu: ', posyandu.namaPosyandu);
+  writeln('Alamat: ', posyandu.alamat);
+  writeln('Puskesmas: ', posyandu.puskesmas);
 end.
 
 
