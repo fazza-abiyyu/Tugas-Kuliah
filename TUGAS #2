@@ -89,4 +89,37 @@ foreach ($members as $member) {
 
 
 
-// Revan Kurniawan 
+// Revan Kurniawan - Pascal
+
+program PerhitunganPSPEC;
+
+var
+  jumlahElemen, i: integer;
+  prob, totalProb: real;
+
+begin
+  totalProb := 1.0;
+
+  writeln('Perhitungan PSPEC');
+  
+  write('Masukkan jumlah elemen: ');
+  readln(jumlahElemen);
+
+  for i := 1 to jumlahElemen do
+  begin
+    write('Masukkan probabilitas sukses untuk elemen ', i, ': ');
+    readln(prob);
+
+    if (prob < 0.0) or (prob > 1.0) then
+    begin
+      writeln('Error: Probabilitas harus antara 0.0 dan 1.0');
+      exit;
+    end;
+
+    totalProb := totalProb * prob;
+  end;
+
+  writeln('Probabilitas total keberhasilan: ', totalProb:0:4);
+end.
+
+
